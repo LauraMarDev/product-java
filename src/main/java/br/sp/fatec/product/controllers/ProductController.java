@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.sp.fatec.product.entities.Product;
+import jakarta.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("products")
@@ -21,8 +23,11 @@ public class ProductController { //serve como endpoint
         list.add(new Product(3L, "product 3", "description3", 300.0));
     }
 
-    @GetMapping //chama o mapeamento do products e exibe a mensagem dentro da string
-    public List<Product> getProducts() {
-        return list;
+    @GetMapping("{id}") //chama o mapeamento do products e exibe a mensagem dentro da string
+    public Product getProductsById(@PathVariable long id) {
+        return list.stream()
+                    .filter(p -> p.getId() == id)
+                    .findFirst()
+                    .orElseThrow( () -> new EntityNotFoundException("Não cadastrado"));
     }
 }
