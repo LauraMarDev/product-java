@@ -1,11 +1,17 @@
 package br.sp.fatec.product.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,6 +23,18 @@ public class Product implements Serializable{
     private String name;
     private String description;
     private Double price;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+    
+    @ManyToMany
+    @JoinTable(
+        name = "TBL_PRODUCT_TAG",
+        joinColumns = @JoinColumn(name = "product_id"),
+        inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private Set<Tag> tags = new HashSet<>();
 
     public Product(){
 
@@ -52,6 +70,22 @@ public class Product implements Serializable{
     }
     public void setPrice(Double price) {
         this.price = price;
+    }
+    
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 
     @Override

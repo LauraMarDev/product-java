@@ -16,6 +16,7 @@ public record ProductRequest(
     @Min(value = 0, message = "Price must be greater than or equal to 0")
     Double price
 
-) {
+)
+{
     
 }

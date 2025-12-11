@@ -22,7 +22,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("products")
-public class ProductController { //funciona como endpoint
+public class ProductController {//funciona como endpoint
 
     @Autowired
     private ProductService service;
